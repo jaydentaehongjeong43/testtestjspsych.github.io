@@ -17,7 +17,7 @@
 		<h1>Hello, world!</h1>
 		<div class="g-signin2" data-onsuccess="onSignIn"></div>
 		<a href="#" onclick="signOut();">Sign out</a>
-		<a class="btn btn-primary" href="experiment.html">Experiment</a>
+		<button type="button" class="btn btn-primary" onclick="startExperiment();">Experiment</button> 
 	</div>
 
 	<!-- Optional JavaScript -->
@@ -43,6 +43,21 @@
 				auth2.signOut().then(function () {
 				console.log('User signed out.');
 			});
+		}
+
+		function startExperiment() {
+			if (auth2.isSignedIn.get()) {
+				var profile = auth2.currentUser.get().getBasicProfile();
+				console.log('ID: ' + profile.getId());
+				console.log('Full Name: ' + profile.getName());
+				console.log('Given Name: ' + profile.getGivenName());
+				console.log('Family Name: ' + profile.getFamilyName());
+				console.log('Image URL: ' + profile.getImageUrl());
+				console.log('Email: ' + profile.getEmail());
+				location.href = "experiment.html?" + ['id=' + profile.getId(), 'name=' + profile.getName(), 'email=' + profile.getEmail()].join('&');
+			} else {
+				$('.g-signin2').click();
+			}
 		}
 	</script>
 </body>
